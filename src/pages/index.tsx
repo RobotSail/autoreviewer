@@ -25,6 +25,11 @@ const Home: NextPage = () => {
       .catch((e) => window.alert("could not create review"));
   };
 
+  const handleReset = () => {
+    setReview("");
+    setCode("");
+  };
+
   return (
     <>
       <Head>
@@ -44,6 +49,7 @@ const Home: NextPage = () => {
               onChangeContent={handleContentChange}
               onSubmit={handleSubmitReview}
               isSubmiting={reviewMutation.isLoading}
+              onReset={handleReset}
             />
             <Review loading={reviewMutation.isLoading} review={review} />
           </div>

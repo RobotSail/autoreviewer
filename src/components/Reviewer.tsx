@@ -6,9 +6,10 @@ type CodeReviewerProps = {
   onChangeContent: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   onSubmit: () => void;
   isSubmiting: boolean;
+  onReset: () => void;
 };
 const CodeReviewer = (props: CodeReviewerProps) => {
-  const { content, onChangeContent, onSubmit, isSubmiting } = props;
+  const { content, onChangeContent, onSubmit, isSubmiting, onReset } = props;
   return (
     <Card>
       <div id="textarea">
@@ -24,10 +25,10 @@ const CodeReviewer = (props: CodeReviewerProps) => {
           autoFocus
           rows={16}
         />
-        <div className="flex flex-wrap items-center">
+        <div className="mt-2 flex flex-wrap gap-2">
           <Button
             onClick={onSubmit}
-            className="mt-2"
+            className="self-center align-middle"
             disabled={isSubmiting}
             gradientDuoTone="purpleToBlue"
           >
@@ -37,6 +38,14 @@ const CodeReviewer = (props: CodeReviewerProps) => {
               </div>
             )}
             Submit for Review
+          </Button>
+          <Button
+            outline
+            gradientDuoTone="pinkToOrange"
+            className="self-center align-middle"
+            onClick={onReset}
+          >
+            Reset
           </Button>
         </div>
       </div>
