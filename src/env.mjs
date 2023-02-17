@@ -5,8 +5,8 @@ import { z } from "zod";
  * This way you can ensure the app isn't built with invalid env vars.
  */
 const server = z.object({
-  NODE_ENV: z.enum(["development", "test", "production"]),
-	OPENAI_API_KEY: z.string(),
+  NODE_ENV: z.enum(["development", "test", "production"]).optional(),
+	OPENAI_API_KEY: z.string().optional(),
 });
 
 /**
