@@ -1,13 +1,14 @@
 // import { dark } from "react-syntax-highlighter/dist/esm/styles/prism";
-import { Button, Card, Label, Textarea } from "flowbite-react";
+import { Button, Card, Label, Spinner, Textarea } from "flowbite-react";
 
 type CodeReviewerProps = {
   content: string;
   onChangeContent: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   onSubmit: () => void;
+  isSubmiting: boolean;
 };
 const CodeReviewer = (props: CodeReviewerProps) => {
-  const { content, onChangeContent, onSubmit } = props;
+  const { content, onChangeContent, onSubmit, isSubmiting } = props;
   return (
     <Card>
       <div id="textarea">
@@ -20,11 +21,24 @@ const CodeReviewer = (props: CodeReviewerProps) => {
           required={true}
           value={content}
           onChange={onChangeContent}
-          rows={4}
+          autoFocus
+          rows={16}
         />
-        <Button onClick={onSubmit} className="mt-2">
-          Submit for Review
-        </Button>
+        <div className="flex flex-wrap items-center">
+          <Button
+            onClick={onSubmit}
+            className="mt-2"
+            disabled={isSubmiting}
+            gradientDuoTone="purpleToBlue"
+          >
+            {isSubmiting && (
+              <div className="mr-3">
+                <Spinner />
+              </div>
+            )}
+            Submit for Review
+          </Button>
+        </div>
       </div>
     </Card>
   );

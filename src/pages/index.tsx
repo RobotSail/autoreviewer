@@ -2,6 +2,7 @@ import { Button, Card } from "flowbite-react";
 import { type NextPage } from "next";
 import Head from "next/head";
 import { useState } from "react";
+import Review from "../components/Review";
 import CodeReviewer from "../components/Reviewer";
 
 import { api } from "../utils/api";
@@ -42,12 +43,9 @@ const Home: NextPage = () => {
               content={code}
               onChangeContent={handleContentChange}
               onSubmit={handleSubmitReview}
+              isSubmiting={reviewMutation.isLoading}
             />
-            {review && (
-              <Card className="mt-2">
-                <p className="whitespace-pre-line">{review}</p>
-              </Card>
-            )}
+            <Review loading={reviewMutation.isLoading} review={review} />
           </div>
         </div>
         {/* <p className="text-2xl text-white">
