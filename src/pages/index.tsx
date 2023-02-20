@@ -18,6 +18,7 @@ const Home: NextPage = () => {
     reviewPrompt,
     temperature,
   }: CodeReviewerFormValues) => {
+    setReviews([]);
     const _prompt = reviewPrompt.trim() === "" ? undefined : reviewPrompt;
     reviewMutation
       .mutateAsync({
