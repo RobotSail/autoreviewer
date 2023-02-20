@@ -7,6 +7,8 @@ import { z } from "zod";
 const server = z.object({
   NODE_ENV: z.enum(["development", "test", "production"]).optional(),
 	OPENAI_API_KEY: z.string().optional(),
+	AXIOM_TOKEN: z.string().optional(),
+	AXIOM_DATASET: z.string().optional(),
 });
 
 /**
@@ -26,6 +28,8 @@ const client = z.object({
 const processEnv = {
   NODE_ENV: process.env.NODE_ENV,
 	OPENAI_API_KEY: process.env.OPENAI_API_KEY,
+	AXIOM_TOKEN: process.env.AXIOM_TOKEN,
+	AXIOM_DATASET: process.env.AXIOM_DATASET,
   // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
 };
 

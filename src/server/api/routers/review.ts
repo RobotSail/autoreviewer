@@ -1,7 +1,8 @@
+import { log } from "next-axiom";
 import { z } from "zod";
-import { createTRPCRouter, publicProcedure } from "../trpc";
 import { Configuration, OpenAIApi } from "openai";
 import { env } from "../../../env.mjs";
+import { createTRPCRouter, publicProcedure } from "../trpc";
 
 const configuration = new Configuration({
   apiKey: env.OPENAI_API_KEY,
@@ -49,13 +50,26 @@ export const reviewRouter = createTRPCRouter({
       const { codeBlock, language, numReviews, temperature, reviewPrompt } =
         input;
       const prompt = createPrompt(codeBlock, language, reviewPrompt);
-      const completion = await openai.createCompletion({
-        model: "text-davinci-003",
-        prompt: prompt,
-        max_tokens: 1000,
-        n: numReviews,
-        temperature: temperature,
+      log.info("received request to create a review", {
+        input,
+        prompt,
       });
-      return completion.data.choices;
+      try {
+        const completion = await openai.createCompletion({
+          model: "text-davinci-003",
+          prompt: prompt,
+          max_tokens: 1000,
+          n: numReviews,
+          temperature: temperature,
+        });
+        return completion.data.choices;
+      } catch (e) {
+        log.error("response from openai failed", {
+          input: input,
+          prompt: prompt,
+          error: e,
+        });
+        throw new Error("failed to get response from OpenAI");
+      }
     }),
 });
