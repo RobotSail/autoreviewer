@@ -1,4 +1,5 @@
 import { Card, Spinner } from "flowbite-react";
+import ReactMarkdown from "react-markdown";
 
 type ReviewProps = {
   loading: boolean;
@@ -13,7 +14,9 @@ const Review: React.FC<ReviewProps> = (props: ReviewProps) => {
           <Spinner />
         </div>
       ) : (
-        <p className="whitespace-pre-line">{review}</p>
+        <ReactMarkdown className="overflow-x-auto  dark:text-gray-100">
+          {review}
+        </ReactMarkdown>
       )}
     </Card>
   );

@@ -8,15 +8,22 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
-const createPrompt = (code: string): string => {
-  const preamble = `You are a talented and experienced maintainer of a major code-base who reviews code and provides helpful feedback.
+const createPrompt = (
+  code: string,
+  language: string,
+  reviewPrompt?: string
+): string => {
+  const preamble = `You are a talented and experienced maintainer of a ${language} code-base who reviews code and provides helpful feedback.
 The following code is submitted for review:
 \`\`\`
 ${code}
 \`\`\`
 
-Please provide a review of the code. Include what this code does well, and what it could do better.
-If proposing a change, please provide an example of how it could be improved:
+${
+  reviewPrompt
+    ? `Please review this code with the following objective, be sure to include examples for each specific point: ${reviewPrompt}:`
+    : "Please provide a critical review of this code, make sure to include examples to further clarify how changes should be made:"
+}
 `;
   return preamble;
 };
@@ -26,16 +33,29 @@ export const reviewRouter = createTRPCRouter({
     .input(
       z.object({
         codeBlock: z.string(),
+        reviewPrompt: z.string().optional(),
+        temperature: z
+          .number()
+          .min(0.0, "temperature cannot be less than 0")
+          .max(1.0, "temperature cannot be greater than 1.0"),
+        numReviews: z
+          .number()
+          .min(1, "cannot have less than 1 review")
+          .max(10, "cannot have more than 10 reviews"),
+        language: z.string(),
       })
     )
     .mutation(async ({ input }) => {
-      const { codeBlock } = input;
-      const prompt = createPrompt(codeBlock);
+      const { codeBlock, language, numReviews, temperature, reviewPrompt } =
+        input;
+      const prompt = createPrompt(codeBlock, language, reviewPrompt);
       const completion = await openai.createCompletion({
         model: "text-davinci-003",
         prompt: prompt,
         max_tokens: 1000,
+        n: numReviews,
+        temperature: temperature,
       });
-      return completion.data.choices[0]?.text;
+      return completion.data.choices;
     }),
 });
