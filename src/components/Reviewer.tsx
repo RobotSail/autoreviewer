@@ -38,8 +38,8 @@ const CodeReviewer = ({
           <Form>
             <div id="textarea">
               <div className="mb-2 flex justify-between">
-                <Label htmlFor="comment" value="Your code" />
-                <Field as={Select} name="fruit">
+                <div className="flex min-h-full  place-items-end"></div>
+                <Field as={Select} id="language" name="language">
                   {languages.map((v) => (
                     <option value={v} key={v}>
                       {v}

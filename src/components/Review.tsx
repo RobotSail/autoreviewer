@@ -1,10 +1,10 @@
-import { Card, Spinner } from "flowbite-react";
+import { Card, type CardProps, Spinner } from "flowbite-react";
 import ReactMarkdown from "react-markdown";
 
 type ReviewProps = {
   loading: boolean;
   review: string;
-};
+} & CardProps;
 const Review: React.FC<ReviewProps> = (props: ReviewProps) => {
   const { review, loading } = props;
   return (

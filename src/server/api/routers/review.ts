@@ -14,7 +14,7 @@ const createPrompt = (
   language: string,
   reviewPrompt?: string
 ): string => {
-  const preamble = `You are a talented and experienced maintainer of a ${language} code-base who reviews code and provides helpful feedback.
+  const preamble = `You are an experienced maintainer of a ${language} codebase who provides code reviews.
 The following code is submitted for review:
 \`\`\`
 ${code}
@@ -22,8 +22,8 @@ ${code}
 
 ${
   reviewPrompt
-    ? `Please review this code with the following objective, be sure to include examples for each specific point: ${reviewPrompt}:`
-    : "Please provide a critical review of this code, make sure to include examples to further clarify how changes should be made:"
+    ? `Provide a critical review of this code with the following objective, and please include code snippets to explain what the code should look like if providing suggestions: ${reviewPrompt}:`
+    : "Please give a critical review of this code. If requesting suggestions, please include code snippets to explain what the code should look like.\nReview"
 }
 `;
   return preamble;

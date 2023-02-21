@@ -64,17 +64,17 @@ const Home: NextPage = () => {
         </Navbar>
         <div className="flex flex-col items-center justify-center ">
           <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
-            <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
+            <h1 className="mt-8 text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
               Automatic Code Reviewer
             </h1>
             {/* <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8"> */}
-            <div className="h-[65%] w-[65%]">
+            <div className="w-[85%]">
               <CodeReviewer
                 initialValues={{
                   content: "",
                   numReviews: 1,
                   reviewPrompt: "",
-                  temperature: 0.1,
+                  temperature: 0.0,
                   language: languages[0] ?? "Golang",
                 }}
                 onSubmit={handleSubmitReview}
@@ -82,13 +82,15 @@ const Home: NextPage = () => {
                 languages={languages}
                 onReset={() => setReviews([])}
               />
-              {reviews.map((review, i) => (
-                <Review
-                  loading={reviewMutation.isLoading}
-                  review={review}
-                  key={i}
-                />
-              ))}
+              <div className="mt-8">
+                {reviews.map((review, i) => (
+                  <Review
+                    loading={reviewMutation.isLoading}
+                    review={review}
+                    key={i}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </div>

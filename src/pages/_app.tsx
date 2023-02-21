@@ -8,7 +8,7 @@ import { DarkThemeToggle, Flowbite, Navbar } from "flowbite-react";
 const MyApp: AppType = ({ Component, pageProps }) => {
   return (
     <Flowbite>
-      <Component {...pageProps} />;
+      <Component {...pageProps} />
     </Flowbite>
   );
 };
