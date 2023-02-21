@@ -50,17 +50,20 @@ export const reviewRouter = createTRPCRouter({
       const { codeBlock, language, numReviews, temperature, reviewPrompt } =
         input;
       const prompt = createPrompt(codeBlock, language, reviewPrompt);
-      log.info("received request to create a review", {
-        input,
-        prompt,
-      });
       try {
-        const completion = await openai.createCompletion({
+        const openAIOpts = {
           model: "text-davinci-003",
           prompt: prompt,
           max_tokens: 1000,
           n: numReviews,
           temperature: temperature,
+        };
+        const completion = await openai.createCompletion(openAIOpts);
+        log.info("successfully created a review: ", {
+          input,
+          prompt,
+          response: completion,
+          parameters: openAIOpts,
         });
         return completion.data.choices;
       } catch (e) {
