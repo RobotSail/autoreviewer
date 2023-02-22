@@ -62,7 +62,7 @@ export const reviewRouter = createTRPCRouter({
         log.info("successfully created a review: ", {
           input,
           prompt,
-          response: completion,
+          response: completion.data,
           parameters: openAIOpts,
         });
         return completion.data.choices;
